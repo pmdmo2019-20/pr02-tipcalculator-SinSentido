@@ -45,11 +45,7 @@ class MainActivity : AppCompatActivity() {
         txtBill.setText(getText(R.string.defaultBill))
         txtPercentage.setText(getText(R.string.defaultPercentage))
         txtDiners.setText(getText(R.string.defaultDiners))
-        txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
-        txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
-        txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
-        txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
-
+        recalculate()
     }
 
     private fun setupViews(){
@@ -83,6 +79,13 @@ class MainActivity : AppCompatActivity() {
         txtBill.requestFocus()
     }
 
+    private fun recalculate(){
+        txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()).replace(",", "."))
+        txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()).replace(",", "."))
+        txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()).replace(",", "."))
+        txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()).replace(",", "."))
+    }
+
     private fun setupTextWatchers(){
         txtBill.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -96,10 +99,7 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 if(s.toString() != ""){
                     tipCalculator.bill = s.toString().toFloat()
-                    txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
-                    txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
-                    txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
-                    txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
+                    recalculate()
                 }
                 else{
                     txtBill.setText(getText(R.string.defaultBill))
@@ -119,10 +119,7 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 if(s.toString() != ""){
                     tipCalculator.percentage = s.toString().toFloat()
-                    txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
-                    txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
-                    txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
-                    txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
+                    recalculate()
                 }
                 else{
                     txtPercentage.setText(getText(R.string.defaultPercentage))
@@ -142,10 +139,7 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 if(s.toString() != ""){
                     tipCalculator.diners = s.toString().toInt()
-                    txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
-                    txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
-                    txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
-                    txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
+                    recalculate()
                 }
                 else{
                     txtDiners.setText(getText(R.string.defaultDiners))

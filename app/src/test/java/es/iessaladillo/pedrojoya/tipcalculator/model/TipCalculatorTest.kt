@@ -25,8 +25,13 @@ class TipCalculatorTest {
     @ParameterizedTest
     @ValueSource(ints = [-1, 0])
     fun `should throw IllegalArgumentException when diners is not positive`(diners: Int) {
-        assertThrows(java.lang.IllegalArgumentException::class.java){ TipCalculator(100f, 10f, -1) }
-        assertThrows(java.lang.IllegalArgumentException::class.java){ TipCalculator(100f, 10f, -0) }
+        assertThrows(java.lang.IllegalArgumentException::class.java) {
+            TipCalculator(
+                100f,
+                10f,
+                diners
+            )
+        }
     }
 
     @DisplayName("Should calculate total properly")
