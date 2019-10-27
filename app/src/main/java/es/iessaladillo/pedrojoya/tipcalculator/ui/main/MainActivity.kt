@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.toString().toIntOrNull() != null){
+                if(s.toString().toIntOrNull() != null && s.toString().toIntOrNull() != 0){
                     tipCalculator.diners = s.toString().toInt()
                     recalculate()
                 }
