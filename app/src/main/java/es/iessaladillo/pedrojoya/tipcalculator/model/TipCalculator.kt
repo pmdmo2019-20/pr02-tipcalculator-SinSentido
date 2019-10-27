@@ -3,22 +3,22 @@ package es.iessaladillo.pedrojoya.tipcalculator.model
 
 // TipCalculator class. Its constructor receives bill, percentage and diners
 
-class TipCalculator {
+class TipCalculator (var bill: Float, var percentage: Float, var diners: Float){
 
     fun calculateTip(): Float {
-        // TODO
+        return (bill/100)*percentage
     }
 
     fun calculateTotal(): Float {
-        // TODO
+        return bill + calculateTip()
     }
 
     fun calculatePerDiner(): Float {
-        // TODO
+        return calculateTotal()/diners
     }
 
     fun calculatePerDinerRounded(): Float {
-        // TODO
+        return Math.ceil(calculatePerDiner().toDouble()).toFloat()
     }
 
 }
