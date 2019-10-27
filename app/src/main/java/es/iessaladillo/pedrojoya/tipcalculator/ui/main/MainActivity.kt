@@ -5,22 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import es.iessaladillo.pedrojoya.tipcalculator.R
 import es.iessaladillo.pedrojoya.tipcalculator.model.TipCalculator
 
 class MainActivity : AppCompatActivity() {
-    //TextView
-    lateinit var lblBill: TextView
-    lateinit var lblTip: TextView
-    lateinit var lblPercentage: TextView
-    lateinit var lblTotal: TextView
-    lateinit var lblPerDiner: TextView
-    lateinit var lblDiners: TextView
-    lateinit var lblPerDinerRounded: TextView
-
     //EditText
     lateinit var txtBill: EditText
     lateinit var txtTip: EditText
@@ -49,6 +39,51 @@ class MainActivity : AppCompatActivity() {
         btnResetDiners.setOnClickListener { resetDiners() }
 
         //Setup TextWatchers
+        setupTextWatchers()
+
+        //Set default values
+        txtBill.setText(getText(R.string.defaultBill))
+        txtPercentage.setText(getText(R.string.defaultPercentage))
+        txtDiners.setText(getText(R.string.defaultDiners))
+        txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
+        txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
+        txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
+        txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
+
+    }
+
+    private fun setupViews(){
+        //EditText
+        txtBill = ActivityCompat.requireViewById(this, R.id.txtBill)
+        txtPercentage = ActivityCompat.requireViewById(this, R.id.txtPercentage)
+        txtTip = ActivityCompat.requireViewById(this, R.id.txtTip)
+        txtTotal = ActivityCompat.requireViewById(this, R.id.txtTotal)
+        txtDiners = ActivityCompat.requireViewById(this, R.id.txtDiners)
+        txtPerDiner = ActivityCompat.requireViewById(this, R.id.txtPerDiner)
+        txtPerDinerRounded = ActivityCompat.requireViewById(this, R.id.txtPerDinerRounded)
+
+        //Button
+        btnResetTip = ActivityCompat.requireViewById(this, R.id.btnResetTip)
+        btnResetDiners = ActivityCompat.requireViewById(this, R.id.btnResetDiners)
+
+        //TipCalculator
+        tipCalculator = TipCalculator(getString(R.string.defaultBill).toFloat(),
+            getString(R.string.defaultPercentage).toFloat(),
+            getString(R.string.defaultDiners).toInt())
+    }
+
+    private fun resetDiners() {
+        txtDiners.setText(getText(R.string.defaultDiners))
+        txtDiners.requestFocus()
+    }
+
+    private fun resetTip() {
+        txtBill.setText(getText(R.string.defaultBill))
+        txtPercentage.setText(getText(R.string.defaultPercentage))
+        txtBill.requestFocus()
+    }
+
+    private fun setupTextWatchers(){
         txtBill.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -106,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {
                 if(s.toString() != ""){
-                    tipCalculator.diners = s.toString().toFloat()
+                    tipCalculator.diners = s.toString().toInt()
                     txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
                     txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
                     txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
@@ -117,56 +152,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
-        //Set default values
-        txtBill.setText(getText(R.string.defaultBill))
-        txtPercentage.setText(getText(R.string.defaultPercentage))
-        txtDiners.setText(getText(R.string.defaultDiners))
-        txtTip.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTip()))
-        txtTotal.setText(getString(R.string.calculatedNumber, tipCalculator.calculateTotal()))
-        txtPerDiner.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDiner()))
-        txtPerDinerRounded.setText(getString(R.string.calculatedNumber, tipCalculator.calculatePerDinerRounded()))
-
-    }
-
-    fun setupViews(){
-        //TextView
-        lblBill = ActivityCompat.requireViewById(this, R.id.lblBill)
-        lblPercentage = ActivityCompat.requireViewById(this, R.id.lblPercentage)
-        lblTip = ActivityCompat.requireViewById(this, R.id.lblTip)
-        lblTotal = ActivityCompat.requireViewById(this, R.id.lblTotal)
-        lblDiners = ActivityCompat.requireViewById(this, R.id.lblDiners)
-        lblPerDiner = ActivityCompat.requireViewById(this, R.id.lblPerDiner)
-        lblPerDinerRounded = ActivityCompat.requireViewById(this, R.id.lblPerDinerRounded)
-
-        //EditText
-        txtBill = ActivityCompat.requireViewById(this, R.id.txtBill)
-        txtPercentage = ActivityCompat.requireViewById(this, R.id.txtPercentage)
-        txtTip = ActivityCompat.requireViewById(this, R.id.txtTip)
-        txtTotal = ActivityCompat.requireViewById(this, R.id.txtTotal)
-        txtDiners = ActivityCompat.requireViewById(this, R.id.txtDiners)
-        txtPerDiner = ActivityCompat.requireViewById(this, R.id.txtPerDiner)
-        txtPerDinerRounded = ActivityCompat.requireViewById(this, R.id.txtPerDinerRounded)
-
-        //Button
-        btnResetTip = ActivityCompat.requireViewById(this, R.id.btnResetTip)
-        btnResetDiners = ActivityCompat.requireViewById(this, R.id.btnResetDiners)
-
-        //TipCalculator
-        tipCalculator = TipCalculator(getString(R.string.defaultBill).toFloat(),
-            getString(R.string.defaultPercentage).toFloat(),
-            getString(R.string.defaultDiners).toFloat())
-    }
-
-    private fun resetDiners() {
-        txtDiners.setText(getText(R.string.defaultDiners))
-        txtDiners.requestFocus()
-    }
-
-    private fun resetTip() {
-        txtBill.setText(getText(R.string.defaultBill))
-        txtPercentage.setText(getText(R.string.defaultPercentage))
-        txtBill.requestFocus()
     }
 
 }
