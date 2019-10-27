@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.toString() != ""){
+                if(s.toString().toFloatOrNull() != null){
                     tipCalculator.bill = s.toString().toFloat()
                     recalculate()
                 }
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.toString() != ""){
+                if(s.toString().toFloatOrNull() != null){
                     tipCalculator.percentage = s.toString().toFloat()
                     recalculate()
                 }
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.toString() != ""){
+                if(s.toString().toIntOrNull() != null){
                     tipCalculator.diners = s.toString().toInt()
                     recalculate()
                 }
